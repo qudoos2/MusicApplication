@@ -1,0 +1,94 @@
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width , initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="main_div">
+        <div class="music_container">
+            <h2 id="title">LOTUS LANE</h2>
+            <h3 id="artist">The Loyalist</h3>
+            <div class="img_container">
+                <img src="images/t1.jpg" alt="">
+            </div>
+            <audio src="music/t1.mp3"></audio>
+            <!-- controls -->
+            <div class="music_controls">
+                <i class="fa-solid fa-backward-step" id="prev" title="Previous"></i>
+                <i class="fa-solid fa-circle-play main_button" id="play" title="Play"></i>
+                <i class="fa-solid fa-forward-step" id="next" title="Next"></i>
+            </div>
+        </div>
+    </div>
+    <script>
+        const music = document.querySelector('audio');
+        const img = document.querySelector('img');
+        const play= document.getElementById('play');
+        const artist= document.getElementById('artist');
+        const title= document.getElementById('title');
+        const prev= document.getElementById('prev');
+        const next= document.getElementById('next');
+
+        const songs = [
+            {
+            name: "t1",
+            title: "Lotus Lane",
+            artist: "The Loyalist"
+            },
+            {
+            name: "t2",
+            title: "Pions",
+            artist: "Pions"
+            },
+            {
+            name: "t3",
+            title: "Gaitar",
+            artist: "Gaitar"
+            },
+        ];
+       let  isPlaying = false;
+       // for play functinality
+       const playMusic =  ()=>{
+            isPlaying = true;
+            music.play();
+            play.classList.replace("fa-circle-play","fa-pause");
+            img.classList.add('anime');
+        }
+    //     for pause functinality
+        const pauseMusic =  ()=>{
+            isPlaying = true;
+            music.pause();
+            play.classList.replace("fa-pause","fa-circle-play");
+            img.classList.remove('anime');
+        }
+        play.addEventListener('click', ()=>{
+            isPlaying ? pauseMusic() : playMusic();
+        })
+        const laodSong = (songs)=>{
+            title.textContent = songs.title;
+            artist.textContent = songs.artist;
+            music.src = "music/" + songs.name + ".mp3";
+            img.src = "images/" + songs.name + ".jpg";
+        }
+        songIndex = 0;
+        // changing the music data loadSong(songs[2])
+        const nextSong = () =>{
+            songIndex = (songIndex + 1) % songs.length;
+            laodSong(songs[songIndex]);
+            playMusic()
+        }
+
+        const prevSong =  () =>{
+            songIndex = (songIndex - 1  + songs.length) % songs.length;
+            laodSong(songs[songIndex]);
+            playMusic()
+        }
+        next.addEventListener('click', nextSong);
+         prev.addEventListener('click', prevSong);
+        
+    </script>
+</body>
+    </html> 
